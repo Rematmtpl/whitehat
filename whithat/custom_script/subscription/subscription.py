@@ -8,6 +8,7 @@ from erpnext.accounts.party import get_party_account_currency
 from erpnext.accounts.doctype.accounting_dimension.accounting_dimension import (
 	get_accounting_dimensions,
 )
+from whithat.custom_script.override_method import custom_get_plan_rate
 from frappe.utils.data import (
     add_days,
     add_to_date,
@@ -66,11 +67,11 @@ class Custom_Subscription(Subscription):
             item_name = frappe.get_value('Item', item_code, 'item_name')
 
             if not prorate:
-                rate = get_plan_rate(
+                rate = custom_get_plan_rate(
                         plan.plan, plan.qty, party, self.current_invoice_start, self.current_invoice_end
                     )
             else:
-                rate = get_plan_rate(
+                rate = custom_get_plan_rate(
                             plan.plan,
                             plan.qty,
                             party,
